@@ -12,14 +12,6 @@ class BaseModel(models.Model):
 	class Meta:
 		abstract = True
 
-
-class Note(BaseModel):
-	title = models.CharField(max_length=500)
-	text = models.TextField()
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	alert_send_at = models.DateTimeField(null=True)
-
-
 class Tag(BaseModel):
 	title = models.CharField(max_length=200)
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -28,3 +20,11 @@ class Tag(BaseModel):
 		on_delete=models.SET_NULL,
 		null=True
 	)
+
+
+class Note(BaseModel):
+	title = models.CharField(max_length=500)
+	text = models.TextField()
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	alert_send_at = models.DateTimeField(null=True)
+	tags = models.ManyToManyField(Tag)
