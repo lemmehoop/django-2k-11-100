@@ -15,7 +15,9 @@ def main_view(request):
     if search:
         # title="..." SELECT * FROM web_note WHERE title = "..."
         # title__iexact="..." SELECT * FROM web_note WHERE UPPER(title) = UPPER("...")
-        notes = notes.filter(title__iexact=search)
+        # title__contains="..." SELECT * FROM web_note WHERE title LIKE = "%...%"
+        # title__icontains="..." SELECT * FROM web_note WHERE UPPER(title) LIKE = UPPER("%...%")
+        notes = notes.filter(title__icontains=search)
 
     return render(request, "web/main.html", {
         'count': Note.objects.count(),
