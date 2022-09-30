@@ -13,7 +13,7 @@
         Количество заметок: {{ count }}.
         Выводить
         {% filter_link "все заметки" "" query_params %} |
-        {% filter_link "c напоминаниями" "with_alerts" query_params %}
+        {% filter_link "c напомина%ниями" "with_alerts" query_params %}
     </p>
 
     <form action="https://google.com/search" method="get">
@@ -46,6 +46,7 @@
 
     <br>
     <a href="{% url 'notes_add' %}">Добавить заметку</a>
+    <a href="{% url 'registration' %}">Регистрация</a>
 
     <ul>
         {% for note in notes %}
