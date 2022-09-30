@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 
+from web.forms import NoteForm
 from web.models import Note, Tag, User
 
 
@@ -57,6 +58,7 @@ def note_view(request, id):
 
 def note_edit_view(request, id=None):
     user = User.objects.first()  # TODO get user from auth
+    form = NoteForm(request.POST)
     error, title, text = None, None, None
 
     note = None
@@ -68,9 +70,8 @@ def note_edit_view(request, id=None):
     if request.method == 'POST':
         title = request.POST.get("title")
         text = request.POST.get("text")
-        if not title or not text:
-            error = 'Название или текст не заполнены. Их нужно заполнить.'
-        else:
+        print(form.is_valid())
+        if form.is_valid():
             if note is None:
                 note = Note()
             note.title = title
@@ -79,8 +80,8 @@ def note_edit_view(request, id=None):
             note.save()
             return redirect('note', note.id)
     return render(request, "web/note_form.html", {
-        'error': error,
         'title': title,
         'text': text,
-        'id': id
+        'id': id,
+        'form': form
     })
