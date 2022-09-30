@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -109,3 +109,8 @@ def login_view(request):
         "form": form,
         'message': message
     })
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('main')
