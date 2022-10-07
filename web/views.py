@@ -73,14 +73,6 @@ class NoteDetailView(DetailView):
 
 
 @login_required
-def note_view(request, id):
-    note = get_object_or_404(Note, user=request.user, id=id)
-    return render(request, "web/note.html", {
-        'note': note
-    })
-
-
-@login_required
 def note_edit_view(request, id=None, title=None):
     form = NoteForm()
 
