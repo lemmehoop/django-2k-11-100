@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
-from django.views.generic import ListView, DetailView, RedirectView, FormView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, RedirectView, FormView, CreateView, UpdateView, DeleteView
 
 from web.forms import NoteForm, AuthForm
 from web.models import Note, Tag, User
@@ -67,9 +67,15 @@ class NoteDetailView(DetailView):
     def get_queryset(self):
         return Note.objects.filter(user=self.request.user)
 
-class NoteEditMixin:
-    form_class = NoteForm
+class NoteMixin:
     template_name = 'web/note_form.html'
+    slug_field = 'id'
+    slug_url_kwarg = 'id'
+
+    def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return Note.objects.none()
+        return Note.objects.filter(user=self.request.user)
 
     def get_initial(self):
         return {'user': self.request.user}
@@ -79,18 +85,12 @@ class NoteEditMixin:
 
 
 
-class NoteCreateFormView(CreateView, NoteEditMixin):
-    pass
+class NoteCreateFormView(CreateView, NoteMixin):
+    form_class = NoteForm
 
 
-class NoteUpdateView(NoteEditMixin, UpdateView):
-    slug_field = 'id'
-    slug_url_kwarg = 'id'
-
-    def get_queryset(self):
-        if not self.request.user.is_authenticated:
-            return Note.objects.none()
-        return Note.objects.filter(user=self.request.user)
+class NoteUpdateView(NoteMixin, UpdateView):
+    form_class = NoteForm
 
     def get_context_data(self, **kwargs):
         return {
@@ -98,6 +98,13 @@ class NoteUpdateView(NoteEditMixin, UpdateView):
             'id': self.kwargs[self.slug_url_kwarg],
             'title': self.object.title
         }
+
+
+class NoteDeleteView(NoteMixin, DeleteView):
+    template_name = 'web/note_delete.html'
+
+    def get_success_url(self):
+        return reverse('main')
 
 
 class RegistrationView(View):
