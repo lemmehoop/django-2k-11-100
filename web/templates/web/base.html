@@ -8,11 +8,12 @@
     <link rel="stylesheet" href="{% static "web/bootstrap.min.css" %}">
 </head>
 <body>
-    <h1><a href="{% url 'main' %}">Заметки</a></h1>
-    {% include 'web/partials/login_info.html' %}
-    <hr>
+    <div class="container">
+        <h1><a href="{% url 'main' %}">Заметки</a></h1>
+        {% include 'web/partials/login_info.html' %}
+        <hr>
 
-    {% block content %}{% endblock %}
-
+        {% block content %}{% endblock %}
+    </div>
 </body>
 </html>

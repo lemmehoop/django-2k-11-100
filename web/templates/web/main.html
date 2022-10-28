@@ -13,19 +13,20 @@
     </p>
 
     <form action="https://google.com/search" method="get">
-        <input type="text" name="q" placeholder="Поиск...">
-        <button>Найти в Google</button>
+        <input type="text" name="q" placeholder="Поиск..." class="form-control">
+        <button class="btn btn-primary">Найти в Google</button>
         (<a href="https://google.com" target="_blank">Google</a>)
     </form>
-
 
     <br>
 
     <form action="" method="get">
         <input type="text" name="search" placeholder="Поиск..."
-               value="{{ search|default_if_none:'' }}">
+               value="{{ search|default_if_none:'' }}"
+               class="form-control"
+        >
 
-        <select name="tag_id">
+        <select name="tag_id" class="form-select">
             <option value="">Выберите тег</option>
             {% for tag in tags %}
                 <option
@@ -37,7 +38,7 @@
             {% endfor %}
         </select>
 
-        <button>Найти</button>
+        <button class="btn btn-primary">Найти</button>
     </form>
 
     <br>
