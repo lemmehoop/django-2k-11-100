@@ -17,6 +17,10 @@ def set_title_to_uppercase(modeladmin, request, queryset):
     )
 
 
+class NoteCommentInline(admin.TabularInline):
+    model = NoteComment
+
+
 class NoteAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'user', 'get_text_count', 'created_at')
     list_display_links = ('id', 'title')
@@ -26,6 +30,7 @@ class NoteAdmin(admin.ModelAdmin):
     readonly_fields = ('alert_send_at', 'get_text_count')
     # exclude = ('tags',)
     actions = (set_title_to_uppercase,)
+    inlines = (NoteCommentInline,)
 
     @admin.display(description='Text count')
     def get_text_count(self, instance):
