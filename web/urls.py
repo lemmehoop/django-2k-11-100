@@ -22,8 +22,8 @@ from web.views import login_view, logout_view, \
 
 urlpatterns = [
     path("", RedirectView.as_view(pattern_name='notes_list'), name='main'),
-    path("api/example/", example_api_view),
-    path("api/example2/", example_api2_view),
+    path("web_api/example/", example_api_view),
+    path("web_api/example2/", example_api2_view),
     path("registration/", RegistrationView.as_view(), name='registration'),
     path("login/", login_view, name='login'),
     path("logout/", logout_view, name='logout'),
