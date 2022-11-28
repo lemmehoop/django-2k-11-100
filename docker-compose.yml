@@ -4,7 +4,7 @@ services:
   postgres:
     image: postgres:14-alpine
     ports:
-      - 5432:5432
+      - 5436:5436
     environment:
       POSTGRES_DB: notes
       POSTGRES_USER: notes

@@ -10,8 +10,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from web.forms import NoteForm, AuthForm
-from web.models import Note, Tag, User
+from .forms import NoteForm, AuthForm
+from .models import Note, Tag, User
 
 
 class NotesListView(ListView):

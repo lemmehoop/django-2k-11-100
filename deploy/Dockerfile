@@ -14,4 +14,4 @@ RUN python src/manage.py collectstatic --noinput
 EXPOSE 8000
 
 CMD python src/manage.py migrate && \
-    uwsgi deploy/app/uwsgi.ini
+    python src/manage.py runserver 0.0.0.0:8000

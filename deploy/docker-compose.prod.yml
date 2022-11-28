@@ -1,35 +1,23 @@
 version: '3'
 
 services:
-  nginx:
-    image: django2k-nginx:latest
-    build:
-      context: ..
-      dockerfile: deploy/nginx/Dockerfile
-    ports:
-      - 80:80
-    depends_on:
-      - app
-    volumes:
-      - media:/app/src/media
-    restart: always
-
   app:
     image: django2k:latest
     build:
-      dockerfile: deploy/app/Dockerfile
+      dockerfile: deploy/Dockerfile
       context: ..
+    ports:
+      - 8000:8000
     depends_on:
       - postgres
     environment:
       DB_HOST: postgres
-      DEBUG: "false"
     restart: always
-    volumes:
-      - media:/app/src/media/
 
   postgres:
     image: postgres:14-alpine
+    ports:
+      - 5432:5432
     restart: always
     environment:
       POSTGRES_DB: notes
@@ -40,4 +28,3 @@ services:
 
 volumes:
   db:
-  media:
