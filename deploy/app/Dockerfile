@@ -7,11 +7,11 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY . .
+COPY .. .
 
 RUN python src/manage.py collectstatic --noinput
 
 EXPOSE 8000
 
 CMD python src/manage.py migrate && \
-    python src/manage.py runserver 0.0.0.0:8000
+    uwsgi deploy/app/uwsgi.ini
